@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi fa cosa? - Modulo 2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .instructions {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 10px;
+            color: #667eea;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .stat-box {
+            background: #f0f4ff;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .reset-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .actions-pool {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .actions-pool h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .action-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            cursor: move;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            user-select: none;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .action-card.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+
+        .action-card.placed {
+            background: #10b981;
+            cursor: default;
+        }
+
+        .roles-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .role-box {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            min-height: 200px;
+        }
+
+        .role-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f4ff;
+        }
+
+        .role-emoji {
+            font-size: 2.5em;
+        }
+
+        .role-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .drop-zone {
+            min-height: 100px;
+            border: 3px dashed #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .drop-zone .action-card {
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .drop-zone .action-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .victory {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideDown 0.5s;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .victory h2 {
+            color: #10b981;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .victory-emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 968px) {
+            .game-area {
+                grid-template-columns: 1fr;
+            }
+
+            .roles-area {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Chi fa cosa?</h1>
+            <p class="subtitle">Trascina ogni azione al ruolo corretto</p>
+            
+            <div class="instructions">
+                💡 <strong>Come si gioca:</strong> Trascina le azioni dalla lista a sinistra e rilasciale nel riquadro del ruolo giusto. Clicca su un'azione posizionata per rimuoverla.
+            </div>
+
+            <div class="stats">
+                <div class="stat-box">Azioni posizionate: <span id="placed">0</span>/8</div>
+                <div class="stat-box">Corrette: <span id="correct">0</span>/8</div>
+                <button class="reset-btn" onclick="resetGame()">🔄 Ricomincia</button>
+                <button class="reset-btn" onclick="window.close()" style="background: #6b7280;">← Torna al corso</button>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <!-- Actions Pool -->
+            <div class="actions-pool">
+                <h2>📋 Azioni da assegnare</h2>
+                <div id="actionsPool"></div>
+            </div>
+
+            <!-- Roles Area -->
+            <div class="roles-area">
+                <div class="role-box">
+                    <div class="role-header">
+                        <div class="role-emoji">👁️</div>
+                        <div class="role-name">OdV</div>
+                    </div>
+                    <div class="drop-zone" data-role="odv"></div>
+                </div>
+
+                <div class="role-box">
+                    <div class="role-header">
+                        <div class="role-emoji">👔</div>
+                        <div class="role-name">Datore di Lavoro</div>
+                    </div>
+                    <div class="drop-zone" data-role="datore"></div>
+                </div>
+
+                <div class="role-box">
+                    <div class="role-header">
+                        <div class="role-emoji">🛡️</div>
+                        <div class="role-name">RSPP</div>
+                    </div>
+                    <div class="drop-zone" data-role="rspp"></div>
+                </div>
+
+                <div class="role-box">
+                    <div class="role-header">
+                        <div class="role-emoji">👤</div>
+                        <div class="role-name">Dipendente</div>
+                    </div>
+                    <div class="drop-zone" data-role="dipendente"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="victory" class="victory" style="display: none;">
+            <div class="victory-emoji">🎉</div>
+            <h2>Perfetto!</h2>
+            <p style="font-size: 1.2em; color: #666; margin-bottom: 20px;">
+                Hai assegnato correttamente tutte le responsabilità!
+            </p>
+            <button class="reset-btn" onclick="resetGame()">Gioca ancora</button>
+        </div>
+    </div>
+
+    <script>
+        const actions = [
+            { id: 1, text: 'Vigila sull\'attuazione del Modello 231', role: 'odv' },
+            { id: 2, text: 'Riceve le segnalazioni interne', role: 'odv' },
+            { id: 3, text: 'Adotta il Modello di Organizzazione', role: 'datore' },
+            { id: 4, text: 'Nomina l\'Organismo di Vigilanza', role: 'datore' },
+            { id: 5, text: 'Valuta i rischi sul lavoro (DVR)', role: 'rspp' },
+            { id: 6, text: 'Propone misure di prevenzione', role: 'rspp' },
+            { id: 7, text: 'Segnala violazioni al codice etico', role: 'dipendente' },
+            { id: 8, text: 'Rispetta le procedure aziendali', role: 'dipendente' }
+        ];
+
+        let placedActions = [];
+        let correctCount = 0;
+
+        function initGame() {
+            placedActions = [];
+            correctCount = 0;
+            updateStats();
+            renderActions();
+            document.getElementById('victory').style.display = 'none';
+            
+            // Clear all drop zones
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.innerHTML = '';
+            });
+        }
+
+        function renderActions() {
+            const pool = document.getElementById('actionsPool');
+            pool.innerHTML = '';
+            
+            // Shuffle actions
+            const shuffled = [...actions].sort(() => Math.random() - 0.5);
+            
+            shuffled.forEach(action => {
+                if (!placedActions.includes(action.id)) {
+                    const card = createActionCard(action);
+                    pool.appendChild(card);
+                }
+            });
+        }
+
+        function createActionCard(action) {
+            const card = document.createElement('div');
+            card.className = 'action-card';
+            card.textContent = action.text;
+            card.draggable = true;
+            card.dataset.id = action.id;
+            card.dataset.role = action.role;
+
+            card.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('actionId', action.id);
+                card.classList.add('dragging');
+            });
+
+            card.addEventListener('dragend', () => {
+                card.classList.remove('dragging');
+            });
+
+            return card;
+        }
+
+        // Setup drop zones
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('drag-over');
+            });
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('drag-over');
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('drag-over');
+                
+                const actionId = parseInt(e.dataTransfer.getData('actionId'));
+                const action = actions.find(a => a.id === actionId);
+                const targetRole = zone.dataset.role;
+
+                if (action && !placedActions.includes(actionId)) {
+                    placedActions.push(actionId);
+                    
+                    const card = createActionCard(action);
+                    card.draggable = false;
+                    card.classList.add('placed');
+                    
+                    // Check if correct
+                    if (action.role === targetRole) {
+                        correctCount++;
+                    }
+                    
+                    // Allow removal on click
+                    card.onclick = () => removeAction(actionId, card);
+                    
+                    zone.appendChild(card);
+                    updateStats();
+                    renderActions();
+                    
+                    if (placedActions.length === actions.length && correctCount === actions.length) {
+                        setTimeout(showVictory, 500);
+                    }
+                }
+            });
+        });
+
+        function removeAction(actionId, cardElement) {
+            const action = actions.find(a => a.id === actionId);
+            if (action.role === cardElement.parentElement.dataset.role) {
+                correctCount--;
+            }
+            
+            placedActions = placedActions.filter(id => id !== actionId);
+            cardElement.remove();
+            updateStats();
+            renderActions();
+        }
+
+        function updateStats() {
+            document.getElementById('placed').textContent = placedActions.length;
+            document.getElementById('correct').textContent = correctCount;
+        }
+
+        function showVictory() {
+            document.getElementById('victory').style.display = 'block';
+        }
+
+        function resetGame() {
+            initGame();
+        }
+
+        // Start game
+        initGame();
+    </script>
+</body>
+</html>
