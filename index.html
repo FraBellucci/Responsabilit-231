@@ -11,17 +11,33 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+       body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+#viewport-800x550 {
+    width: 800px;
+    height: 550px;
+    overflow: auto; /* permette scroll interno se necessario */
+    background-color: transparent;
+}
+
+.container {
+    width: 1200px;
+    height: 800px; /* altezza stimata */
+    margin: 0;
+    padding: 20px;
+    transform: scale(0.667);
+    transform-origin: top left;
+    position: relative;
+}
 
         .header {
             background: white;
@@ -236,6 +252,9 @@
     </style>
 </head>
 <body>
+     <div id="viewport-800x550">
+        <div class="container">
+            <!-- tutto il contenuto esistente -->
     <div class="container">
         <div class="header">
             <h1>🎯 Chi fa cosa?</h1>
