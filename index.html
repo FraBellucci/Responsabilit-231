@@ -6,225 +6,219 @@
     <title>Chi fa cosa? - Modulo 2</title>
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-      body {
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    padding: 20px;
 }
 
 .container {
     width: 800px;
     height: 550px;
-    overflow: auto; /* scroll interno se necessario */
-    background: transparent;
-    padding: 20px;
+    overflow: hidden;
 }
 
-        .header {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
+.header {
+    background: white;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
 
-        h1 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
+h1 {
+    color: #667eea;
+    font-size: 1.4em;
+    margin-bottom: 5px;
+}
 
-        .subtitle {
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
+.subtitle {
+    color: #666;
+    font-size: 0.85em;
+    margin-bottom: 10px;
+}
 
-        .instructions {
-            background: #f0f4ff;
-            padding: 15px;
-            border-radius: 10px;
-            color: #667eea;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
+.instructions {
+    background: #f0f4ff;
+    padding: 8px;
+    border-radius: 8px;
+    color: #667eea;
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+}
 
-        .stats {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
+.stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
 
-        .stat-box {
-            background: #f0f4ff;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-weight: bold;
-            color: #667eea;
-        }
+.stat-box {
+    background: #f0f4ff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #667eea;
+    font-size: 0.85em;
+}
 
-        .reset-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 10px;
-            font-size: 1em;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
+.reset-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 0.85em;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
 
-        .reset-btn:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
-        }
+.reset-btn:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+}
 
-        .game-area {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 20px;
-        }
+.game-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 12px;
+    height: calc(550px - 130px); /* Altezza rimanente */
+}
 
-        .actions-pool {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
+.actions-pool {
+    background: white;
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    overflow-y: auto;
+}
 
-        .actions-pool h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-        }
+.actions-pool h2 {
+    color: #667eea;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
 
-        .action-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            cursor: move;
-            font-weight: 500;
-            transition: all 0.3s;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-            user-select: none;
-        }
+.action-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: move;
+    font-weight: 500;
+    font-size: 0.85em;
+    transition: all 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
 
-        .action-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
+.action-card:hover {
+    transform: translateY(-2px);
+}
 
-        .action-card.dragging {
-            opacity: 0.5;
-            transform: rotate(5deg);
-        }
+.action-card.dragging {
+    opacity: 0.5;
+}
 
-        .action-card.placed {
-            background: #10b981;
-            cursor: default;
-        }
+.action-card.placed {
+    background: #10b981;
+    cursor: default;
+}
 
-        .roles-area {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
+.roles-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
 
-        .role-box {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            min-height: 200px;
-        }
+.role-box {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
 
-        .role-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f0f4ff;
-        }
+.role-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #f0f4ff;
+}
 
-        .role-emoji {
-            font-size: 2.5em;
-        }
+.role-emoji {
+    font-size: 1.8em;
+}
 
-        .role-name {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #333;
-        }
+.role-name {
+    font-size: 1em;
+    font-weight: bold;
+    color: #333;
+}
 
-        .drop-zone {
-            min-height: 100px;
-            border: 3px dashed #ddd;
-            border-radius: 10px;
-            padding: 15px;
-            transition: all 0.3s;
-        }
+.drop-zone {
+    min-height: 80px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 8px;
+    transition: all 0.3s;
+}
 
-        .drop-zone.drag-over {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
+.drop-zone.drag-over {
+    border-color: #667eea;
+    background: #f0f4ff;
+}
 
-        .drop-zone .action-card {
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
+.drop-zone .action-card {
+    cursor: pointer;
+    margin-bottom: 6px;
+}
 
-        .drop-zone .action-card:last-child {
-            margin-bottom: 0;
-        }
+.victory {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    margin-top: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    animation: slideDown 0.5s;
+}
 
-        .victory {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            text-align: center;
-            margin-top: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: slideDown 0.5s;
-        }
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.victory h2 {
+    color: #10b981;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
 
-        .victory h2 {
-            color: #10b981;
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-
-        .victory-emoji {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
+.victory-emoji {
+    font-size: 3em;
+    margin-bottom: 15px;
+}
 
         @media (max-width: 968px) {
             .game-area {
